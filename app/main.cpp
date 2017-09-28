@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
 
     SqliteToMySql sql;
     sql.connect();
-//    sql.aip_device_create();
-//    sql.aip_device_insert();
-//    sql.aip_record_create();
-//    sql.aip_record_insert();
-//    sql.aip_online_create();
-//    sql.aip_repair_create();
-//    sql.aip_repair_insert();
+    sql.aip_device_create();
+    sql.aip_device_insert();
+    sql.aip_record_create();
+    sql.aip_record_insert();
+    sql.aip_online_create();
+    sql.aip_repair_create();
+    sql.aip_repair_insert();
 
     return 0;
 }

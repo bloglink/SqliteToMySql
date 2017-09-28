@@ -14,15 +14,15 @@ SqliteToMySql::SqliteToMySql()
 
 void SqliteToMySql::connect()
 {
-    server = QSqlDatabase::addDatabase("QMYSQL3");
+    server = QSqlDatabase::addDatabase("QMYSQL3", "mysql");
     server.setHostName("192.168.1.55");
     server.setUserName("root");
-    server.setPassword("123456");
+    server.setPassword("87973318");
     server.setDatabaseName("aip-server");
     if (!server.open())
         qDebug() << "open fail" << server.lastError();
 
-    sqlite = QSqlDatabase::addDatabase("QSQLITE");
+    sqlite = QSqlDatabase::addDatabase("QSQLITE", "sqlite");
     sqlite.setDatabaseName("aip-server.db");
     if (!sqlite.open())
         qDebug() << "open fail" << sqlite.lastError();
@@ -89,6 +89,7 @@ void SqliteToMySql::aip_record_create()
     cmd += "devUuid bigint,";                       // 设备编号
     cmd += "devAddr text,";                         // 设备地址
     cmd += "devNumb text,";                         // 出厂编号
+    cmd += "netPort text,";                         // 网络端口
     cmd += "netAddr text,";                         // 网络地址
     cmd += "recTime text,";                         // 记录时间
     cmd += "netStat text,";                         // 设备状态
@@ -117,15 +118,16 @@ void SqliteToMySql::aip_record_insert()
         int index = devAddrs.indexOf(devAddr);
         double devUuid = devUuids.at(index);
 
-        query.prepare("insert into aip_record values(?,?,?,?,?,?,?,?)");
+        query.prepare("insert into aip_record values(?,?,?,?,?,?,?,?,?)");
         query.bindValue(0, recUuid);
         query.bindValue(1, devUuid);
         query.bindValue(2, devAddr);
         query.bindValue(3, devNumb);
-        query.bindValue(4, netAddr);
-        query.bindValue(5, recTime);
-        query.bindValue(6, netStat);
-        query.bindValue(7, verNumb);
+        query.bindValue(4, "--");
+        query.bindValue(5, netAddr);
+        query.bindValue(6, recTime);
+        query.bindValue(7, netStat);
+        query.bindValue(8, verNumb);
         if (!query.exec())
             qDebug() << "aip_record_insert fail" << server.lastError();
     }
@@ -144,6 +146,7 @@ void SqliteToMySql::aip_online_create()
     cmd += "devUuid bigint,";                       // 设备编号
     cmd += "devAddr text,";                         // 设备地址
     cmd += "devNumb text,";                         // 出厂编号
+    cmd += "netPort text,";                         // 网络端口
     cmd += "netAddr text,";                         // 网络地址
     cmd += "recTime text,";                         // 记录时间
     cmd += "netStat text,";                         // 设备状态
